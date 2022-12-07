@@ -1,0 +1,12 @@
+Traceback (most recent call last):
+  File "test.py", line 44, in <module>
+    create_metrics()
+  File "test.py", line 32, in create_metrics
+    component = sonar.measures.get_component_with_specified_measures(component=i['key'], branch="master", fields="classes", metricKeys=metrics)
+  File "/home/caolv/.local/lib/python3.8/site-packages/sonarqube/utils/common.py", line 132, in inner_func
+    response = self._get(url_pattern, params=params)
+  File "/home/caolv/.local/lib/python3.8/site-packages/sonarqube/utils/rest_client.py", line 141, in _get
+    return self.request("GET", path=path, params=params, data=data, headers=headers)
+  File "/home/caolv/.local/lib/python3.8/site-packages/sonarqube/utils/rest_client.py", line 99, in request
+    raise NotFoundError(msg)
+sonarqube.utils.exceptions.NotFoundError: Error in request. Possibly Not Found error [404]: The following metric keys are not found: covered_conditions_by_line, coverage_line_hits_data, conditions_by_line, branch_coverage_hits_data

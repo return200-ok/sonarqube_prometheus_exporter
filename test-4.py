@@ -1,0 +1,2 @@
+level = ''
+print(bool(level))
