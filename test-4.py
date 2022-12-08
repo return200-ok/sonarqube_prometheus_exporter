@@ -1,2 +1,0 @@
-level = ''
-print(bool(level))
