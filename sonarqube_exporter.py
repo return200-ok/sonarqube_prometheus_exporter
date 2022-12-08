@@ -1,9 +1,7 @@
 import time
 
-import requests
 from prometheus_client import Enum, Gauge, Info, start_http_server
 
-import sonarqube
 from sonarqube import SonarQubeClient
 
 sonarqube_server = "http://192.168.3.101:9001"
