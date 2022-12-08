@@ -1,7 +1,7 @@
 import time
 
 import requests
-from prometheus_client import Gauge, Info, start_http_server
+from prometheus_client import Enum, Gauge, Info, start_http_server
 
 import sonarqube
 from sonarqube import SonarQubeClient
@@ -13,22 +13,27 @@ sonar = SonarQubeClient(sonarqube_url=sonarqube_server, token=sonarqube_token)
 def get_stat(metrics):
     stats = []
     for metric in metrics:
-        g = Gauge(metric['key'], metric['name'], ['project_key', 'domain'])
-        stats.append({'gauge':g, 'metric':metric})
+        if metric['type'] in ['INT', 'FLOAT', 'PERCENT', 'MILLISEC', 'RATING', 'WORK_DUR']:
+            g = Gauge(metric['key'], metric['name'], ['project_key', 'domain'])
+        elif metric['type'] == 'LEVEL':
+            g = Enum(metric['key'], metric['name'], ['project_key', 'domain'], states=['ERROR', 'OK'])
+        elif metric['type'] in ['STRING', 'DATA', 'DISTRIB']:
+            g = Info(metric['key'], metric['name'], ['project_key', 'domain'])
+        stats.append({'stat':g, 'metric':metric})
     return stats
 
-def metric_types(metric_type, value):
-    if metric_type in ['INT', 'FLOAT', 'PERCENT', 'MILLISEC']:
+def map_value_type(metric_type, value):
+    if metric_type in ['INT', 'FLOAT', 'PERCENT', 'MILLISEC', 'RATING', 'WORK_DUR']:
         return float(value)
-    elif metric_type == 'BOOL':
-        return bool(value)
-    elif metric_type in ['STRING', 'DATA', 'LEVEL', 'DISTRIB', 'RATING', 'WORK_DUR']:
+    # elif metric_type == 'BOOL':
+    #     return bool(value)
+    elif metric_type in ['STRING', 'DATA', 'LEVEL', 'DISTRIB']:
         return str(value)
     else:
         return value
 
-def create_metrics(stats):
-    g = stats['gauge']
+def gen_metrics(stats):
+    g = stats['stat']
     metric = stats['metric']
     projects = list(sonar.projects.search_projects())
     for p in projects:
@@ -38,13 +43,13 @@ def create_metrics(stats):
         if len(measures) > 0:
             if 'value' in measures[0]:
                 try:
-                    value = metric_types(metric['type'], measures[0]['value'])
+                    value = map_value_type(metric['type'], measures[0]['value'])
                 except (KeyError, IndexError, NameError) as error:
                     value = -1
                     raise error
             elif 'periods' in measures[0]:
                 try:
-                    value = metric_types(metric['type'], measures[0]['periods'][0]['value'])
+                    value = map_value_type(metric['type'], measures[0]['periods'][0]['value'])
                 except (KeyError, IndexError, NameError) as error:
                     value = -1
                     raise error
@@ -53,6 +58,16 @@ def create_metrics(stats):
                 project_key=p['key'], 
                 domain=metric['domain'],
             ).set(value)
+        # elif metric['type'] == 'LEVEL':
+        #     g.labels(
+        #         project_key=p['key'], 
+        #         domain=metric['domain'],
+        #     ).state(value)
+        # elif metric['type'] in ['STRING', 'DATA', 'DISTRIB']:
+        #     g.labels(
+        #         project_key=p['key'], 
+        #         domain=metric['domain'],
+        #     ).info(str(value))
 
 def main():
     metrics = list(sonar.metrics.search_metrics())
@@ -60,8 +75,10 @@ def main():
     start_http_server(8198)
     while True:
         for s in stats:
-            create_metrics(s)
+            gen_metrics(s)
         time.sleep(5)
 
-main()
+if __name__ == "__main__":
+    main()
+
 
