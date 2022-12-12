@@ -392,11 +392,13 @@ open_issues{domain="Issues",project_key="bac"} 198.0
 
 projects Project branches
 ```# HELP projects Project branches
-# TYPE projects gauge```
+# TYPE projects gauge
+```
 
 public_api Public API
 ```# HELP public_api Public API
-# TYPE public_api gauge```
+# TYPE public_api gauge
+```
 
 public_documented_api_density Public Documented API (%)
 ```# HELP public_documented_api_density Public Documented API (%)
@@ -656,17 +658,15 @@ $ PDK_ENV=$(pwd)/config/production.env PDK_PROJECTS_CONFIG=$(pwd)/config/project
 
 By default, a grafana instance preloaded with templated dashboards will be started. Use your browser to view [http://localhost:3000](http://localhost:3000). The default username is `admin` and default password is `admin`. The dasboards are then accessible under the 'Home' tab.
 
-Please note that it takes ~20 minutes for data to start showing up on the dashboards. You may need to change the timescales.
-
 ### Templated Grafana dashboards
 
-The files under `dashboards/*.json` contain two sample grafana dashboards described below.
+The files under `dashboards/*.json` contain a grafana dashboards described below.
 
 #### `Sonarqube Exporter` dashboard
 
-The `Project Development KPIs` dashboard presents all metrics in detail and is meant for finer-grained analytics. See an image of the dasboard with data below.
+The `Sonarqube Exporter` dashboard presents all metrics in detail and is meant for finer-grained analytics. See an image of the dasboard with data below.
 
-![overview!](https://github.com/soundcloud/project-dev-kpis/blob/master/assets/overview_dashboard.png?raw=true)
+![overview!](https://github.com/return200-ok/sonarqube_prometheus_exporter/blob/main/assets/sonarqube_exporter.png?raw=true)
 
 
 # Contribute!
