@@ -1,0 +1,27 @@
+services:
+  grafana:
+    image: "grafana/grafana"
+    volumes:
+      - "${GRAFANA_CONFIG}:/usr/share/grafana/conf/defaults.ini"
+      - "${GRAFANA_DASHBOARD_DIR}:/var/lib/grafana/dashboards"
+    ports:
+      - "3000:3000"
+    healthcheck:
+      test: ["CMD-SHELL", "curl -f localhost:3000/api/health && echo 'ready'"]
+      interval: 10s
+      retries: 30
+  prometheus:
+    image: "prom/prometheus"
+    volumes:
+      - "${PROMETHEUS_CONFIG}:/etc/prometheus/prometheus.yml"
+      - "./config/prometheus.rules:/etc/prometheus/prometheus.rules.yml"
+    ports:
+      - "9090:9090"
+  sonarqube-exporter:
+    image: "return200/sonarqube-exporter"
+    env_file:
+      - "${PROD_ENV}"
+    volumes:
+      - "/tmp:/tmp"
+    ports:
+      - "8198:8198"
