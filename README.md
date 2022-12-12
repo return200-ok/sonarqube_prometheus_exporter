@@ -736,8 +736,6 @@ $ make test
 
 ## Run
 
-A [docker-compose](https://docs.docker.com/compose/) configuration is included in this repository to make getting started with the project as simple as possible. To use it, follow the following steps.
-
 ### Define your environment
 
 Using the sample environment as a base, 
@@ -746,6 +744,18 @@ Using the sample environment as a base,
 $ cp config/sample.env config/production.env
 $ vim config/production.env
 ```
+### Build image
+Run command below:
+```
+docker build -t return200/sonarqube-exporter:latest .
+```
+### Quick start with `docker`
+```
+docker run -d -p8198:8198 sonarqube-exporter:latest
+```
+Access `localhost:8198`
+![overview!](https://github.com/return200-ok/sonarqube_prometheus_exporter/blob/main/assets/sonarqube_exporter_metrisc.png?raw=true)
+
 
 ### Run with `docker compose`
 
