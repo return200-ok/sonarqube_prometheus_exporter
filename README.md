@@ -751,7 +751,11 @@ docker build -t return200/sonarqube-exporter:latest .
 ```
 ### Quick start with `docker`
 ```
-docker run -d -p8198:8198 sonarqube-exporter:latest
+docker run -d \
+-p8198:8198 \
+-eSONARQUBE_SERVER='http://192.168.3.101:9001' \
+-eSONARQUBE_TOKEN='squ_af1e521e19aef5c5de1cb6df89adf3cbb3a9759e' \
+sonarqube-exporter:latest
 ```
 Access `localhost:8198`
 ![overview!](https://github.com/return200-ok/sonarqube_prometheus_exporter/blob/main/assets/sonarqube_exporter_metrisc.png?raw=true)
@@ -777,7 +781,7 @@ The files under `dashboards/*.json` contain a grafana dashboards described below
 
 The `Sonarqube Exporter` dashboard presents all metrics in detail and is meant for finer-grained analytics. See an image of the dasboard with data below.
 
-![overview!](https://github.com/return200-ok/sonarqube_prometheus_exporter/blob/main/assets/sonarqube_exporter.png?raw=true)
+![overview!](https://github.com/return200-ok/sonarqube_prometheus_exporter/blob/main/assets/sonarqube_exporter_dashboard.png?raw=true)
 
 
 # Contribute!
