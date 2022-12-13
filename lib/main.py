@@ -1,4 +1,5 @@
 import json
+import os
 import time
 
 import pandas as pd
@@ -7,8 +8,8 @@ from until import logger, sr_to_json
 
 from sonarqube import SonarQubeClient
 
-sonarqube_server = "http://192.168.3.101:9001"
-sonarqube_token = "squ_af1e521e19aef5c5de1cb6df89adf3cbb3a9759e"
+sonarqube_server = os.environ.get('SONARQUBE_SERVER', 'http://localhost:9000')
+sonarqube_token = os.environ.get('SONARQUBE_TOKEN', 'squ_token_here')
 sonar = SonarQubeClient(sonarqube_url=sonarqube_server, token=sonarqube_token)
 
 def get_stat(metrics):
