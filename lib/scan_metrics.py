@@ -1,5 +1,5 @@
 from prometheus_client import Enum, Gauge, Info
-from until import get_json, sr_to_json
+from util import get_json, sr_to_json
 
 
 def get_stat(metrics):
