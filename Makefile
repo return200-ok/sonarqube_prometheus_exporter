@@ -9,7 +9,5 @@ build:
 .PHONY: test
 test:
 	docker run \
-		--entrypoint=/project-dev-kpis/dev-wrap \
 		$(IMAGE_NAME) \
-		--config=/project-dev-kpis/config/sample.env \
-		python -m unittest discover -s /project-dev-kpis/lib -p 'test_*.py'
+		python -m unittest discover -s /lib -p 'test_*.py'

@@ -1,6 +1,18 @@
 # Sonarqube Exporter
 `Sonarqube Exporter` is a exporter to get metrics of Sonarqube server 
 
+### Quick start with `docker`
+```
+docker run -d \
+-p8198:8198 \
+-eSONARQUBE_SERVER='http://192.168.3.101:9001' \
+-eSONARQUBE_TOKEN='squ_af1e521e19aef5c5de1cb6df89adf3cbb3a9759e' \
+return200/sonarqube-exporter:latest
+```
+Access `localhost:8198`
+![overview!](https://github.com/return200-ok/sonarqube_prometheus_exporter/blob/main/assets/sonarqube_exporter_metrisc.png?raw=true)
+
+
 ## List metrics
 stat_rule Frequency of rule
 ```
@@ -749,7 +761,7 @@ Run command below:
 ```
 docker build -t return200/sonarqube-exporter:latest .
 ```
-### Quick start with `docker`
+### Run with `docker`
 ```
 docker run -d \
 -p8198:8198 \
