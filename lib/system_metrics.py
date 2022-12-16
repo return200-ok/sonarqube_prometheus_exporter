@@ -146,7 +146,7 @@ def system_metric(sonarqube_server, sonarqube_token):
   compute_engine_jvm_state_max_memory = get_json('Worker Count', compute_engine_jvm_state)
   compute_engine_jvm_state_max_memory_metric.set(compute_engine_jvm_state_max_memory)  
 
-  compute_engine_jvm_free_memory = get_json('Max Memory (MB)', compute_engine_jvm_state)
+  compute_engine_jvm_free_memory = get_json('Free Memory (MB)', compute_engine_jvm_state)
   compute_engine_jvm_free_memory_metric.set(compute_engine_jvm_free_memory)
 
   compute_engine_jvm_heap_commited = get_json('Heap Committed (MB)', compute_engine_jvm_state)
