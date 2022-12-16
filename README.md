@@ -1,7 +1,8 @@
-# Sonarqube Exporter
+# Sonarqube Exporter (Info)
 `Sonarqube Exporter` is a exporter to get metrics of Sonarqube server 
 
-### Quick start with `docker`
+## Quick start with `docker`
+Run command below (edit sonarqube_url and token):
 ```
 docker run -d \
 -p8198:8198 \
@@ -11,6 +12,67 @@ return200/sonarqube-exporter:latest
 ```
 Access `localhost:8198`
 ![overview!](https://github.com/return200-ok/sonarqube_prometheus_exporter/blob/main/assets/sonarqube_exporter_metrisc.png?raw=true)
+
+
+
+# Use
+
+## Run
+
+### Build image
+Run command below:
+```
+docker build -t return200/sonarqube-exporter:latest .
+```
+### Run with `docker`
+```
+docker run -d \
+-p8198:8198 \
+-eSONARQUBE_SERVER='http://192.168.3.101:9001' \
+-eSONARQUBE_TOKEN='squ_af1e521e19aef5c5de1cb6df89adf3cbb3a9759e' \
+sonarqube-exporter:latest
+```
+Access `localhost:8198`
+
+### Run with `docker compose`
+
+#### Define your environment
+
+Using the sample environment as a base, 
+
+```bash
+$ cd docker-compose
+$ cp config/sample.env config/production.env
+$ vim config/production.env
+```
+#### Start grafana - prometheus - sonarqube_exporter stack
+To run with your newly configured environment, execute the following.
+
+```bash
+docker-compose up -d
+```
+
+### Viewing metrics with Grafana
+
+By default, a grafana instance preloaded with templated dashboards will be started. Use your browser to view [http://localhost:3000](http://localhost:3000). The default username is `admin` and default password is `admin`. The dasboards are then accessible under the 'Home' tab.
+
+### Templated Grafana dashboards
+
+The files under `dashboards/*.json` contain a grafana dashboards described below.
+
+#### `Sonarqube - System Dashboard` dashboard
+
+The `Sonarqube - System Dashboard` dashboard presents all metrics in detail of Sonarqube instance.
+See an image of the dasboard with data below.
+
+![overview!](https://github.com/return200-ok/sonarqube_prometheus_exporter/blob/main/assets/Sonarqube-System-Dashboard.png?raw=true)
+
+#### `Sonarqube - Scan Dashboard` dashboard
+
+The `Sonarqube - Scan Dashboard` dashboard presents all metrics in detail and is meant for finer-grained analytics.
+See an image of the dasboard with data below.
+
+![overview!](https://github.com/return200-ok/sonarqube_prometheus_exporter/blob/main/assets/Sonarqube-Scan-Dashboard.png?raw=true)
 
 
 ## List metrics
@@ -731,70 +793,6 @@ wont_fix_issues Won't Fix Issues
 # TYPE wont_fix_issues gauge
 wont_fix_issues{domain="Issues",project_key="bac"} 3.0
 ```
-
-
-
-
-# Use
-
-## Build & test
-
-To build and test the project locally simply run the following commands.
-
-```bash
-$ make
-$ make test
-```
-
-## Run
-
-### Define your environment
-
-Using the sample environment as a base, 
-
-```bash
-$ cp config/sample.env config/production.env
-$ vim config/production.env
-```
-### Build image
-Run command below:
-```
-docker build -t return200/sonarqube-exporter:latest .
-```
-### Run with `docker`
-```
-docker run -d \
--p8198:8198 \
--eSONARQUBE_SERVER='http://192.168.3.101:9001' \
--eSONARQUBE_TOKEN='squ_af1e521e19aef5c5de1cb6df89adf3cbb3a9759e' \
-sonarqube-exporter:latest
-```
-Access `localhost:8198`
-![overview!](https://github.com/return200-ok/sonarqube_prometheus_exporter/blob/main/assets/sonarqube_exporter_metrisc.png?raw=true)
-
-
-### Run with `docker compose`
-
-To run with your newly configured environment, execute the following.
-
-```bash
-$ PDK_ENV=$(pwd)/config/production.env PDK_PROJECTS_CONFIG=$(pwd)/config/projects.json ./compose-ctl up
-```
-
-### Viewing metrics with Grafana
-
-By default, a grafana instance preloaded with templated dashboards will be started. Use your browser to view [http://localhost:3000](http://localhost:3000). The default username is `admin` and default password is `admin`. The dasboards are then accessible under the 'Home' tab.
-
-### Templated Grafana dashboards
-
-The files under `dashboards/*.json` contain a grafana dashboards described below.
-
-#### `Sonarqube Exporter` dashboard
-
-The `Sonarqube Exporter` dashboard presents all metrics in detail and is meant for finer-grained analytics. See an image of the dasboard with data below.
-
-![overview!](https://github.com/return200-ok/sonarqube_prometheus_exporter/blob/main/assets/sonarqube_exporter_dashboard.png?raw=true)
-
 
 # Contribute!
 
