@@ -67,9 +67,9 @@ See an image of the dasboard with data below.
 
 ![overview!](https://github.com/return200-ok/sonarqube_prometheus_exporter/blob/main/assets/Sonarqube-System-Dashboard.png?raw=true)
 
-#### `Sonarqube - Scan Dashboard` dashboard
+#### `Sonarqube - Analysis Dashboard` dashboard
 
-The `Sonarqube - Scan Dashboard` dashboard presents all metrics in detail and is meant for finer-grained analytics.
+The `Sonarqube - Analysis Dashboard` dashboard presents all metrics in detail and is meant for finer-grained analytics.
 See an image of the dasboard with data below.
 
 ![overview!](https://github.com/return200-ok/sonarqube_prometheus_exporter/blob/main/assets/Sonarqube-Scan-Dashboard.png?raw=true)
