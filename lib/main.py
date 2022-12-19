@@ -2,8 +2,9 @@ import os
 import time
 
 import prometheus_client as prom
+from analysis_metrics import (common_metrics, event_metrics, get_stat,
+                              rule_metrics)
 from prometheus_client import start_http_server
-from scan_metrics import common_metrics, event_metrics, get_stat, rule_metrics
 from system_metrics import system_metric
 
 from sonarqube import SonarQubeClient
