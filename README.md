@@ -59,6 +59,9 @@ By default, a grafana instance preloaded with templated dashboards will be start
 ### Templated Grafana dashboards
 
 The files under `dashboards/*.json` contain a grafana dashboards described below.
+Or you can import dashboard from 
+Analysis Dashboard [17642](https://grafana.com/grafana/dashboards/17642-sonarqube-scan-dashboard/)
+System Dashboard [17641](https://grafana.com/grafana/dashboards/17641-sonarqube-system-dashboard/)
 
 #### `Sonarqube - System Dashboard` dashboard
 
