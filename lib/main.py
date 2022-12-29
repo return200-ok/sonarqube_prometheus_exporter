@@ -5,9 +5,8 @@ import prometheus_client as prom
 from analysis_metrics import (common_metrics, event_metrics, get_stat,
                               rule_metrics)
 from prometheus_client import start_http_server
-from system_metrics import system_metric
-
 from sonarqube import SonarQubeClient
+from system_metrics import system_metric
 
 sonarqube_server = os.environ.get('SONARQUBE_SERVER', 'http://192.168.3.101:9001')
 sonarqube_token = os.environ.get('SONARQUBE_TOKEN', 'squ_af1e521e19aef5c5de1cb6df89adf3cbb3a9759e')

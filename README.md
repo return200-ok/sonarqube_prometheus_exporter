@@ -1,5 +1,5 @@
 # Sonarqube Exporter (Info)
-`Sonarqube Exporter` is a exporter to get metrics of Sonarqube server 
+`Sonarqube Exporter`  isa exporter to get metrics of Sonarqube server 
 
 ## Quick start with `docker`
 Run command below (edit sonarqube_url and token):
