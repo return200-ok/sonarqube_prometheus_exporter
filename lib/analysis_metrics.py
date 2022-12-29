@@ -1,5 +1,5 @@
+from lib.util import get_json, sr_to_json
 from prometheus_client import Enum, Gauge, Info
-from util import get_json, sr_to_json
 
 
 def get_stat(metrics):
@@ -13,6 +13,21 @@ def get_stat(metrics):
             print('metrics is not supported')
         stats.append({'stat':g, 'metric':metric})
     return stats
+    
+def get_value(measures):
+    if 'value' in measures[0]:
+        try:
+            value = measures[0]['value']
+        except (KeyError, IndexError, NameError) as error:
+            print(error)
+            raise error
+    elif 'periods' in measures[0]:
+        try:
+            value = measures[0]['periods'][0]['value']
+        except (KeyError, IndexError, NameError) as error:
+            print(error)
+            raise error
+    return value
 
 def common_metrics(sonar, stats):
     g = stats['stat']

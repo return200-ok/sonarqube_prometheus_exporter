@@ -1,5 +1,5 @@
+from lib.util import convert, get_data, get_json
 from prometheus_client import Gauge, Info
-from util import convert, get_data, get_json
 
 health_metric = Info('health_check', 'Server health check')
 web_jvm_max_memory_metric = Gauge('web_jvm_max_memory', 'Web JVM Max Memory (MB)')

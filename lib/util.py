@@ -16,7 +16,7 @@ def get_date_string(date_object):
 
 logFormatter = logging.Formatter("%(asctime)s [%(threadName)-12.12s] [%(levelname)-5.5s]  %(message)s")
 rootLogger = logging.getLogger()
-fileName = get_date_string(datetime.now())+'_gitlab_collecter'
+fileName = get_date_string(datetime.now())+'sonarqube_exporter'
 logPath = 'logs'
 fileHandler = logging.FileHandler("{0}/{1}.log".format(logPath, fileName))
 fileHandler.setFormatter(logFormatter)
