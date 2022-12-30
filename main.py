@@ -44,11 +44,11 @@ def exporter_start():
     sonar = SonarQubeClient(sonarqube_url=sonarqube_server, token=sonarqube_token)
     projects = list(sonar.projects.search_projects())
     metrics = list(sonar.metrics.search_metrics())
-    stats = get_stat(metrics)
+    list_stat = get_stat(metrics)
     def metrics_task():
         system_metric(sonarqube_server, sonarqube_token)
-        for s in stats:
-            common_metrics(projects, sonar, s)
+        for stats in list_stat:
+            common_metrics(projects, sonar, stats)
         rule_metrics(projects, sonar)
         event_metrics(projects, sonar)
     try:
