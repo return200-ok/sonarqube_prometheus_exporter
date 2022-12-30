@@ -10,7 +10,7 @@ from sonarqube import SonarQubeClient
 
 sonarqube_server = os.environ.get('SONARQUBE_SERVER', 'http://192.168.3.101:9001')
 sonarqube_token = os.environ.get('SONARQUBE_TOKEN', 'squ_af1e521e19aef5c5de1cb6df89adf3cbb3a9759e')
-sonar = SonarQubeClient(sonarqube_url=sonarqube_server, token=sonarqube_token)
+
 exporter_listen_host = os.environ.get('EXPORTER_LISTEN_HOST', '0.0.0.0')
 exporter_listen_port = os.environ.get('EXPORTER_LISTEN_PORT', 8198)
 
@@ -41,14 +41,16 @@ def exporter_start():
     prom.REGISTRY.unregister(prom.PLATFORM_COLLECTOR)
     prom.REGISTRY.unregister(prom.GC_COLLECTOR)
 
+    sonar = SonarQubeClient(sonarqube_url=sonarqube_server, token=sonarqube_token)
+    projects = list(sonar.projects.search_projects())
     metrics = list(sonar.metrics.search_metrics())
     stats = get_stat(metrics)
     def metrics_task():
         system_metric(sonarqube_server, sonarqube_token)
         for s in stats:
-            common_metrics(sonar, s)
-        rule_metrics(sonar)
-        event_metrics(sonar)
+            common_metrics(projects, sonar, s)
+        rule_metrics(projects, sonar)
+        event_metrics(projects, sonar)
     try:
         start_http_server(exporter_listen_port, addr=exporter_listen_host)
         schedule(minutes=1, task=metrics_task)
