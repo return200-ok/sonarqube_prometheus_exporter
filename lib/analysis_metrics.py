@@ -27,58 +27,63 @@ def get_value(measures):
             raise error
     return value
 
-def set_metrics(metric, value, stat, project):
-    if metric['type'] in ['INT', 'FLOAT', 'PERCENT', 'MILLISEC', 'RATING', 'WORK_DUR']:
-        stat.labels(
-            project_key=project['key'], 
-            domain=metric['domain'],
+def set_metrics(sonar_issue_key, sonar_issue_domain, sonar_issue_type, value, prom_metric, project_key):
+    if sonar_issue_type in ['INT', 'FLOAT', 'PERCENT', 'MILLISEC', 'RATING', 'WORK_DUR']:
+        prom_metric.labels(
+            project_key=project_key, 
+            domain=sonar_issue_domain,
         ).set(value)
-    elif metric['key'] == 'alert_status':
-        stat.labels(
-            project_key=project['key'], 
-            domain=metric['domain'],
+    elif sonar_issue_key == 'alert_status':
+        prom_metric.labels(
+            project_key=project_key, 
+            domain=sonar_issue_domain,
         ).state(value)
     else:
         print('metrics is not supported')
 
 def common_metrics(projects, sonar, stats):
-    g = stats['stat']
-    metric = stats['metric']
+    prom_metric = stats['stat']
+    sonar_metric = stats['metric']
     for p in projects:
-        component = sonar.measures.get_component_with_specified_measures(component=p['key'], fields="metrics", metricKeys=metric['key'])
+        project_key = p['key']
+        sonar_issue_key = sonar_metric['key']
+        sonar_issue_domain = sonar_metric['domain']
+        sonar_issue_type = sonar_metric['type']
+        component = sonar.measures.get_component_with_specified_measures(component=project_key, fields="metrics", metricKeys=sonar_issue_key)
         measures = component['component']['measures']
         if len(measures) > 0:
             value = get_value(measures)
-            set_metrics(metric, value, g, p)
+            set_metrics(sonar_issue_key, sonar_issue_domain, sonar_issue_type, value, prom_metric, project_key)
         else:
             print('component doesnt have metric')
 
 stat_rule = Gauge('stat_rule', 'Frequency of rule', ['project_key', 'rule'])
 def rule_metrics(projects, sonar):
     for p in projects:
-        issues1 = list(sonar.issues.search_issues(componentKeys=p['key']))
+        project_key = p['key']
+        issues1 = list(sonar.issues.search_issues(componentKeys=project_key))
         rules = []
         for i in issues1:
             rules.append(i['rule'])
         j_data = sr_to_json(rules)
-
         for key, value in j_data.items():
             stat_rule.labels(
-                project_key=p['key'], 
+                project_key=project_key, 
                 rule=key,
             ).set(value)
 
 stat_event = Info('project_analyses_and_events', 'Description of project analyses', ['project_key'])
 def event_metrics(projects, sonar):
     for p in projects:
-        project_analyses_and_events = list(sonar.project_analyses.search_project_analyses_and_events(project=p['key']))
+        project_key = p['key']
+        project_analyses_and_events = list(sonar.project_analyses.search_project_analyses_and_events(project=project_key))
         for event in project_analyses_and_events:
             event_id = get_json("key", event)
             date = get_json("date", event)
             project_version = get_json("projectVersion", event)     
             value = {'event_id': event_id, 'date': date, 'project_version': project_version}   
             stat_event.labels(
-                project_key=p['key'], 
+                project_key=project_key, 
             ).info(value)
 
 
