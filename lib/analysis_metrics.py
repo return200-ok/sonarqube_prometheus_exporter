@@ -19,13 +19,11 @@ def get_value(measures):
         try:
             value = measures[0]['value']
         except (KeyError, IndexError, NameError) as error:
-            print(error)
             raise error
     elif 'periods' in measures[0]:
         try:
             value = measures[0]['periods'][0]['value']
         except (KeyError, IndexError, NameError) as error:
-            print(error)
             raise error
     return value
 
