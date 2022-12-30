@@ -29,10 +29,10 @@ def get_value(measures):
             raise error
     return value
 
-def common_metrics(sonar, stats):
+def common_metrics(projects, sonar, stats):
     g = stats['stat']
     metric = stats['metric']
-    projects = list(sonar.projects.search_projects())
+    # projects = list(sonar.projects.search_projects())
     for p in projects:
         component = sonar.measures.get_component_with_specified_measures(component=p['key'], fields="metrics", metricKeys=metric['key'])
         measures = component['component']['measures']
@@ -55,8 +55,8 @@ def common_metrics(sonar, stats):
             print('component doesnt have metric')
 
 stat_rule = Gauge('stat_rule', 'Frequency of rule', ['project_key', 'rule'])
-def rule_metrics(sonar):
-    projects = list(sonar.projects.search_projects())
+def rule_metrics(projects, sonar):
+    # projects = list(sonar.projects.search_projects())
     for p in projects:
         issues1 = list(sonar.issues.search_issues(componentKeys=p['key']))
         rules = []
@@ -71,8 +71,8 @@ def rule_metrics(sonar):
             ).set(value)
 
 stat_event = Info('project_analyses_and_events', 'Description of project analyses', ['project_key'])
-def event_metrics(sonar):
-    projects = list(sonar.projects.search_projects())
+def event_metrics(projects, sonar):
+    # projects = list(sonar.projects.search_projects())
     for p in projects:
         project_analyses_and_events = list(sonar.project_analyses.search_project_analyses_and_events(project=p['key']))
         for event in project_analyses_and_events:
