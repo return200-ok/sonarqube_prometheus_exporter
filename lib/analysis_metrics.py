@@ -47,22 +47,9 @@ def common_metrics(projects, sonar, stats):
     for p in projects:
         component = sonar.measures.get_component_with_specified_measures(component=p['key'], fields="metrics", metricKeys=metric['key'])
         measures = component['component']['measures']
-        # global value
         if len(measures) > 0:
             value = get_value(measures)
             set_metrics(metric, value, g, p)
-            # if metric['type'] in ['INT', 'FLOAT', 'PERCENT', 'MILLISEC', 'RATING', 'WORK_DUR']:
-            #     g.labels(
-            #         project_key=p['key'], 
-            #         domain=metric['domain'],
-            #     ).set(value)
-            # elif metric['key'] == 'alert_status':
-            #     g.labels(
-            #         project_key=p['key'], 
-            #         domain=metric['domain'],
-            #     ).state(value)
-            # else:
-            #     print('metrics is not supported')
         else:
             print('component doesnt have metric')
 
