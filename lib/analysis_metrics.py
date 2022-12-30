@@ -38,18 +38,19 @@ def common_metrics(sonar, stats):
         measures = component['component']['measures']
         global value
         if len(measures) > 0:
-            if 'value' in measures[0]:
-                try:
-                    value = measures[0]['value']
-                except (KeyError, IndexError, NameError) as error:
-                    print(error)
-                    raise error
-            elif 'periods' in measures[0]:
-                try:
-                    value = measures[0]['periods'][0]['value']
-                except (KeyError, IndexError, NameError) as error:
-                    print(error)
-                    raise error
+            value = get_value(measures)
+            # if 'value' in measures[0]:
+            #     try:
+            #         value = measures[0]['value']
+            #     except (KeyError, IndexError, NameError) as error:
+            #         print(error)
+            #         raise error
+            # elif 'periods' in measures[0]:
+            #     try:
+            #         value = measures[0]['periods'][0]['value']
+            #     except (KeyError, IndexError, NameError) as error:
+            #         print(error)
+            #         raise error
             if metric['type'] in ['INT', 'FLOAT', 'PERCENT', 'MILLISEC', 'RATING', 'WORK_DUR']:
                 g.labels(
                     project_key=p['key'], 
