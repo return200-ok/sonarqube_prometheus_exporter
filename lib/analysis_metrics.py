@@ -32,7 +32,6 @@ def get_value(measures):
 def common_metrics(projects, sonar, stats):
     g = stats['stat']
     metric = stats['metric']
-    # projects = list(sonar.projects.search_projects())
     for p in projects:
         component = sonar.measures.get_component_with_specified_measures(component=p['key'], fields="metrics", metricKeys=metric['key'])
         measures = component['component']['measures']
@@ -56,7 +55,6 @@ def common_metrics(projects, sonar, stats):
 
 stat_rule = Gauge('stat_rule', 'Frequency of rule', ['project_key', 'rule'])
 def rule_metrics(projects, sonar):
-    # projects = list(sonar.projects.search_projects())
     for p in projects:
         issues1 = list(sonar.issues.search_issues(componentKeys=p['key']))
         rules = []
@@ -72,7 +70,6 @@ def rule_metrics(projects, sonar):
 
 stat_event = Info('project_analyses_and_events', 'Description of project analyses', ['project_key'])
 def event_metrics(projects, sonar):
-    # projects = list(sonar.projects.search_projects())
     for p in projects:
         project_analyses_and_events = list(sonar.project_analyses.search_project_analyses_and_events(project=p['key']))
         for event in project_analyses_and_events:
