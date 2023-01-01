@@ -1,4 +1,5 @@
-FROM python:3.8
+#2023
+FROM python:3.8-slim
 
 WORKDIR /sonarqube_exporter/
 COPY . .
