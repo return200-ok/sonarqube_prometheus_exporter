@@ -34,6 +34,7 @@ rootLogger.addHandler(consoleHandler)
 logging.getLogger().setLevel(logging.DEBUG)
 logger = logging.getLogger()
 
+# Convert sr to json
 def sr_to_json(series):
     sr = pd.Series(series)
     fre = sr.value_counts()
@@ -56,6 +57,7 @@ def get_data(url, token):
   data = json.loads(res.content)
   return data
 
+# Convert "xx MB" to number
 def convert(string):
     value = re.search(r'([0-9]+)', string)
     unit = re.search(r'([A-Z]?B)', string)
