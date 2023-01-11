@@ -2,9 +2,6 @@ version: '3'
 services:
   grafana:
     image: "grafana/grafana"
-    # volumes:
-      # - "${GRAFANA_CONFIG}:/usr/share/grafana/conf/defaults.ini"
-      # - "${GRAFANA_DASHBOARD_DIR}:/var/lib/grafana/dashboards"
     ports:
       - "3000:3000"
     healthcheck:
