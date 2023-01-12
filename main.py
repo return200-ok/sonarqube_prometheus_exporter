@@ -31,11 +31,11 @@ def schedule(minutes, task):
 
 def exporter_start():
 
-    print('starting server http://{}:{}/metrics'.format(
+    print('Starting server http://{}:{}/metrics'.format(
     exporter_listen_host, exporter_listen_port))
 
     '''
-    Stop scraping of default metric
+    Disable scrap default metric
     '''
     prom.REGISTRY.unregister(prom.PROCESS_COLLECTOR)
     prom.REGISTRY.unregister(prom.PLATFORM_COLLECTOR)
