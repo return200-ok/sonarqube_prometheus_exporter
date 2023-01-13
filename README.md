@@ -1,12 +1,12 @@
 # Sonarqube Exporter (Info)
-`Sonarqube Exporter`  isa exporter to get metrics of Sonarqube server 
+`Sonarqube Exporter`  is a prometheus exporter to get all metrics from Sonarqube server 
 
 ## Quick start with `docker`
-Run command below (edit sonarqube_url and token):
+Run command below `(change SONARQUBE_SERVER and SONARQUBE_TOKEN):`
 ```
 docker run -d \
 -p8198:8198 \
--eSONARQUBE_SERVER='http://192.168.3.101:9001' \
+-eSONARQUBE_SERVER='http://sonarqube_server:PORT' \
 -eSONARQUBE_TOKEN='squ_af1e521e19aef5c5de1cb6df89adf3cbb3a9759e' \
 return200/sonarqube-exporter:latest
 ```
@@ -24,17 +24,8 @@ Run command below:
 ```
 docker build -t return200/sonarqube-exporter:latest .
 ```
-### Run with `docker`
-```
-docker run -d \
--p8198:8198 \
--eSONARQUBE_SERVER='http://192.168.3.101:9001' \
--eSONARQUBE_TOKEN='squ_af1e521e19aef5c5de1cb6df89adf3cbb3a9759e' \
-sonarqube-exporter:latest
-```
-Access `localhost:8198`
 
-### Run with `docker compose`
+### Start with grafana - prometheus 
 
 #### Define your environment
 
@@ -45,8 +36,6 @@ $ cd docker-compose
 $ cp config/sample.env config/production.env
 $ vim config/production.env
 ```
-#### Start grafana - prometheus - sonarqube_exporter stack
-To run with your newly configured environment, execute the following.
 
 ```bash
 docker-compose up -d
