@@ -17,8 +17,6 @@ Access `localhost:8198`
 
 # Use
 
-## Run
-
 ### Build image
 Run command below:
 ```
