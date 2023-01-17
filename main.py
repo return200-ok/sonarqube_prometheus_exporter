@@ -11,7 +11,6 @@ from sonarqube import SonarQubeClient
 # Set the default value of the environment variable.
 sonarqube_server = os.environ.get('SONARQUBE_SERVER', 'http://192.168.3.101:9001')
 sonarqube_token = os.environ.get('SONARQUBE_TOKEN', 'squ_af1e521e19aef5c5de1cb6df89adf3cbb3a9759e')
-
 exporter_listen_host = os.environ.get('EXPORTER_LISTEN_HOST', '0.0.0.0')
 exporter_listen_port = os.environ.get('EXPORTER_LISTEN_PORT', 8198)
 
@@ -32,7 +31,6 @@ def schedule(minutes, task):
             print(e)
 
 def exporter_start():
-
 # Printing the server address and port.
     print('Starting server http://{}:{}/metrics'.format(
     exporter_listen_host, exporter_listen_port))
@@ -42,9 +40,15 @@ def exporter_start():
     prom.REGISTRY.unregister(prom.PLATFORM_COLLECTOR)
     prom.REGISTRY.unregister(prom.GC_COLLECTOR)
 
+# Creating a SonarQubeClient object.
     sonar = SonarQubeClient(sonarqube_url=sonarqube_server, token=sonarqube_token)
+
+# Getting a list of projects from the SonarQube server.
     projects = list(sonar.projects.search_projects())
+
+# Getting a list of metrics from the SonarQube server.
     metrics = list(sonar.metrics.search_metrics())
+
     list_stat = get_stat(metrics)
     def metrics_task():
         """
@@ -55,11 +59,12 @@ def exporter_start():
             common_metrics(projects, sonar, stats)
         rule_metrics(projects, sonar)
         event_metrics(projects, sonar)
+    # Starting the http server and scheduling the metrics_task to run every minute.
     try:
         start_http_server(exporter_listen_port, addr=exporter_listen_host)
         schedule(minutes=1, task=metrics_task)
-    except (KeyboardInterrupt, SystemExit) as e:
-        print(e)
+    except (KeyboardInterrupt, SystemExit) as error:
+        print(error)
 
 if __name__ == "__main__":
     exporter_start()
