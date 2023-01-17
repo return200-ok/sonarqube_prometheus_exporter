@@ -50,22 +50,22 @@ Or you can import dashboard from
 Analysis Dashboard [17642](https://grafana.com/grafana/dashboards/17642-sonarqube-scan-dashboard/)
 System Dashboard [17641](https://grafana.com/grafana/dashboards/17641-sonarqube-system-dashboard/)
 
-#### `Sonarqube - System Dashboard` dashboard
-
-The `Sonarqube - System Dashboard` dashboard presents all metrics in detail of Sonarqube instance.
-See an image of the dasboard with data below.
-
-![overview!](https://github.com/return200-ok/sonarqube_prometheus_exporter/blob/main/assets/Sonarqube-System-Dashboard.png?raw=true)
-
-#### `Sonarqube - Analysis Dashboard` dashboard
+#### `Sonarqube - Analysis Dashboard` 
 
 The `Sonarqube - Analysis Dashboard` dashboard presents all metrics in detail and is meant for finer-grained analytics.
 See an image of the dasboard with data below.
 
 ![overview!](https://github.com/return200-ok/sonarqube_prometheus_exporter/blob/main/assets/Sonarqube-Analysis-Dashboard.png?raw=true)
 
+#### `Sonarqube - System Dashboard` 
 
-## List metrics
+The `Sonarqube - System Dashboard` dashboard presents all metrics in detail of Sonarqube instance.
+See an image of the dasboard with data below.
+
+![overview!](https://github.com/return200-ok/sonarqube_prometheus_exporter/blob/main/assets/Sonarqube-System-Dashboard.png?raw=true)
+
+
+## Available metrics
 stat_rule Frequency of rule
 ```
 # HELP stat_rule Frequency of rule
@@ -785,8 +785,6 @@ wont_fix_issues{domain="Issues",project_key="bac"} 3.0
 ```
 
 # Contribute!
-
-If you want to contribute to the project, do it
 
 # Copyright
 
