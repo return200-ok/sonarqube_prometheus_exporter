@@ -16,7 +16,7 @@ exporter_listen_port = os.environ.get('EXPORTER_LISTEN_PORT', 8198)
 
 
 def schedule(minutes, task):
-# A function that will run the task every minute.
+    # A function that will run the task every minute.
     while True:
         try:
             tic = time.time()
@@ -31,22 +31,22 @@ def schedule(minutes, task):
             print(e)
 
 def exporter_start():
-# Printing the server address and port.
+    # Printing the server address and port.
     print('Starting server http://{}:{}/metrics'.format(
     exporter_listen_host, exporter_listen_port))
 
-# Unregistering the default collectors from the registry.
+    # Unregistering the default collectors from the registry.
     prom.REGISTRY.unregister(prom.PROCESS_COLLECTOR)
     prom.REGISTRY.unregister(prom.PLATFORM_COLLECTOR)
     prom.REGISTRY.unregister(prom.GC_COLLECTOR)
 
-# Creating a SonarQubeClient object.
+    # Creating a SonarQubeClient object.
     sonar = SonarQubeClient(sonarqube_url=sonarqube_server, token=sonarqube_token)
 
-# Getting a list of projects from the SonarQube server.
+    # Getting a list of projects from the SonarQube server.
     projects = list(sonar.projects.search_projects())
 
-# Getting a list of metrics from the SonarQube server.
+    # Getting a list of metrics from the SonarQube server.
     metrics = list(sonar.metrics.search_metrics())
 
     list_stat = get_stat(metrics)
@@ -59,6 +59,7 @@ def exporter_start():
             common_metrics(projects, sonar, stats)
         rule_metrics(projects, sonar)
         event_metrics(projects, sonar)
+        
     # Starting the http server and scheduling the metrics_task to run every minute.
     try:
         start_http_server(exporter_listen_port, addr=exporter_listen_host)
