@@ -1,6 +1,8 @@
 from lib.util import convert, get_data, get_json
 from prometheus_client import Gauge, Info
 
+# Defining the metrics that will be used in the script.
+
 health_metric = Info('health_check', 'Server health check')
 web_jvm_max_memory_metric = Gauge('web_jvm_max_memory', 'Web JVM Max Memory (MB)')
 web_jvm_free_memory_metric = Gauge('web_jvm_free_memory', 'Web JVM Free Memory (MB)')
@@ -61,6 +63,7 @@ ncloc_count_by_language_metric = Gauge('ncloc_count_by_language', 'Line of code 
 
 
 def system_metric(sonarqube_server, sonarqube_token):
+  # Getting the data from the sonarqube server and then it is getting the health of the server.
   url = sonarqube_server+"/api/system/info"
   data = get_data(url, sonarqube_token)
 
