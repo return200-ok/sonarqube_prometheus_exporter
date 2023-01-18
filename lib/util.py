@@ -1,3 +1,4 @@
+# It's importing the libraries that we need to use in this script.
 import json
 import logging
 import re
