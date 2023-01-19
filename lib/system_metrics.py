@@ -64,7 +64,7 @@ ncloc_count_by_language_metric = Gauge('ncloc_count_by_language', 'Line of code 
 
 
 def system_metric(sonarqube_server, sonarqube_token):
-  # Getting the data from the sonarqube server and then it is getting the health of the server.
+# Getting the data from the sonarqube server and then it is getting the health of the server.
   url = sonarqube_server+"/api/system/info"
   data = get_data(url, sonarqube_token)
 
