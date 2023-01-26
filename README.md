@@ -790,5 +790,3 @@ wont_fix_issues{domain="Issues",project_key="bac"} 3.0
 
 GNU General Public License v3.0
 
-
-
