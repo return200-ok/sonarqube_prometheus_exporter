@@ -202,6 +202,7 @@ confirmed_issues Confirmed Issues
 confirmed_issues{domain="Issues",project_key="bac"} 1.0
 ```
 
+
 coverage Coverage
 ```
 # HELP coverage Coverage
